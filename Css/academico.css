@@ -114,7 +114,7 @@ header{
     min-height: 80vh;
     max-height: 80%;
     height: auto; 
-    padding: 1rem 4rem;
+    padding: 1rem 6rem;
     box-sizing: border-box;
 }
 .curriculo>h1{
@@ -136,6 +136,7 @@ header{
     padding-left: 1.5rem;
 }
 .lista-materias a{
+    width: 80%;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1rem;
