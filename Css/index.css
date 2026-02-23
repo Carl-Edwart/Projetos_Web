@@ -1,6 +1,37 @@
 html{
     background-color: beige;
 }
+#cursor-magic{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 55% 45% 60% 40%;
+    filter: blur(1px);
+    box-shadow:
+        0 0 6px currentColor,
+        0 0 16px currentColor;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    animation: cloudShape 1s ease-in-out infinite;
+    transition: 
+        background-color 0.5s linear,
+        color 0.5s linear;
+}
+.magic-particle{
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: currentColor;
+    box-shadow: 0 0 12px currentColor;
+    animation: particle-fade 1s ease-out forwards;
+    z-index: 9999;
+}
 .cokkie{
     background-color: rgb(25, 25, 25);
     color: white;
@@ -71,6 +102,19 @@ body{
     margin: 30vh 0 0 0;
     height: 220vh;
 }
+::-webkit-scrollbar{
+    width: 0.8rem;
+}
+::-webkit-scrollbar-track{
+    background: rgb(20,20,20);
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(100,100,100);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    filter: brightness(1.3);
+}
 #bg{
     position: fixed;
     top: 20vh;
@@ -82,6 +126,7 @@ body{
     height: auto;
 }
 #fundo{
+    filter: blur(5px);
     width: 100%;
     height: auto;
     border: solid 0.8rem rgb(25, 25, 25);
@@ -177,11 +222,6 @@ header{
     transform: scale(1.01) translateY(-0.4rem);
     box-shadow: white 0 0 0.6rem;
     text-shadow: 0 0 0.1rem white;
-}
-.card:active{
-    transform: rotate3d(1.2, 0.5, 1.7, 180deg);
-    background-color: white;
-    color: black;
 }
 .card>p{
     margin: 2rem;
@@ -297,4 +337,15 @@ footer{
 }
 #ico-apple>p{
     margin: 0;
+}
+@keyframes cloudShape{
+    0%   { border-radius: 55% 45% 60% 40%; }
+    50%  { border-radius: 45% 55% 40% 60%; }
+    100% { border-radius: 55% 45% 60% 40%; }
+}
+@keyframes particle-fade{
+    to{
+        transform: translate(var(--x), var(--y)) scale(0);
+        opacity: 0;
+    }
 }

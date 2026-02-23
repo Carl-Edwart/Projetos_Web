@@ -26,6 +26,7 @@ body{
     height: auto;
 }
 #fundo{
+    filter: blur(5px);
     width: 100%;
     height: auto;
     border: solid 0.8rem rgb(25, 25, 25);
