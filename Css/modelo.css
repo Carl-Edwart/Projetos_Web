@@ -15,6 +15,19 @@ body{
     margin: 30vh 0 0 0;
     height: 160vh;
 }
+::-webkit-scrollbar{
+    width: 0.8rem;
+}
+::-webkit-scrollbar-track{
+    background: rgb(20,20,20);
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(100,100,100);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    filter: brightness(1.3);
+}
 #bg{
     position: fixed;
     top: 20vh;

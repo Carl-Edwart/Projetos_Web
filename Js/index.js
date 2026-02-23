@@ -36,6 +36,16 @@ function onScroll() {
 
 window.addEventListener("scroll", onScroll);
 
+const fundo = document.getElementById("fundo");
+
+document.addEventListener("mousedown", () => {
+    fundo.style.filter = "blur(0px)";
+});
+
+document.addEventListener("mouseup", () => {
+    fundo.style.filter = "blur(5px)";
+});
+
 //BLOCO DO COKKIE
 
 const cokkie = document.querySelector(".cokkie");

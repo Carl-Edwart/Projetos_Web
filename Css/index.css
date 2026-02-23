@@ -8,7 +8,7 @@ html{
     width: 18px;
     height: 18px;
     background: white;
-    border-radius: 55% 45% 60% 40%;
+    border-radius: 55% 15% 80% 40%;
     filter: blur(1px);
     box-shadow:
         0 0 6px currentColor,
@@ -35,7 +35,7 @@ html{
 .cokkie{
     background-color: rgb(25, 25, 25);
     color: white;
-    border: solid 0.4rem black;
+    border: solid 0.2rem rgb(15, 15, 15);
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -127,9 +127,10 @@ body{
 }
 #fundo{
     filter: blur(5px);
+    transition: filter 8s ease;
     width: 100%;
     height: auto;
-    border: solid 0.8rem rgb(25, 25, 25);
+    border: solid 0.6rem rgb(50, 50, 50);
     border-radius: 0.4rem;
 }
 main{
