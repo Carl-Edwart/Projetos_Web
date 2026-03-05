@@ -30,12 +30,25 @@ Além do aspecto técnico, o site tem como tema a **minha trajetória acadêmica
 ## 📂 Estrutura do projeto
 /
 ├── index.html
+├── home.html
+├── academico.html
+├── sobre.html
+├── Matérias/
+│ └── fisica1.html
+│ └── portugues1.html
+│ └── ...
 ├── Css/
 │ └── index.css
+│ └── home.css
+│ └── ...
 ├── Js/
 │ └── index.js
+│ └── home.js
+│ └── ...
 ├── Img/
-│ ├── fundo1.jpeg
+│ └── fundo1.jpeg
+│ └── eu1.jpeg
+│ └── ...
 ├── .gitignore
 ├── LICENSE
 └── README.md
