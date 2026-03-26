@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Tarefas</title>
+</head>
+<body>
+
+    <h1>Minhas Tarefas</h1>
+
+    <input type="text" id="campoTarefa" placeholder="Digite sua tarefa aqui...">
+    <input type="date" id="campoData">
+    <button onclick="adicionarTarefa()">Adicionar</button>
+
+    <p id="contador">Tarefas na lista: 0</p>
+
+    <ul id="listaTarefas"></ul>
+
+    <script>
+        var tarefas = [];
+
+        function atualizarContador() {
+            var total = tarefas.length;
+            document.getElementById("contador").innerText = "Tarefas na lista: " + total;
+        }
+
+        function adicionarTarefa() {
+            var campo = document.getElementById("campoTarefa");
+            var campoData = document.getElementById("campoData");
+            var texto = campo.value.trim();
+            var data = campoData.value;
+
+            if (texto === "") {
+                alert("Você precisa digitar uma tarefa!");
+                return;
+            }
+
+            if (texto.length < 3) {
+                alert("A tarefa precisa ter pelo menos 3 caracteres.");
+                return;
+            }
+
+            if (data === "") {
+                alert("Escolha uma data para a tarefa!");
+                return;
+            }
+
+            var tarefa = {
+                nome: texto,
+                data: data,
+                concluida: false
+            };
+
+            tarefas.push(tarefa);
+
+            var lista = document.getElementById("listaTarefas");
+            var item = document.createElement("li");
+
+            var partes = data.split("-");
+            var dataFormatada = partes[2] + "/" + partes[1] + "/" + partes[0];
+
+            var spanTexto = document.createElement("span");
+            spanTexto.innerText = texto + " - " + dataFormatada + " ";
+
+            var btnConcluir = document.createElement("button");
+            btnConcluir.innerText = "Concluir";
+            btnConcluir.onclick = function () {
+                if (spanTexto.style.textDecoration === "line-through") {
+                    spanTexto.style.textDecoration = "none";
+                    tarefa.concluida = false;
+                    btnConcluir.innerText = "Concluir";
+                } else {
+                    spanTexto.style.textDecoration = "line-through";
+                    tarefa.concluida = true;
+                    btnConcluir.innerText = "Desfazer";
+                }
+            };
+
+            var btnRemover = document.createElement("button");
+            btnRemover.innerText = "Remover";
+            btnRemover.onclick = function () {
+                lista.removeChild(item);
+                for (var i = 0; i < tarefas.length; i++) {
+                    if (tarefas[i] === tarefa) {
+                        tarefas.splice(i, 1);
+                        break;
+                    }
+                }
+                atualizarContador();
+            };
+
+            item.appendChild(spanTexto);
+            item.appendChild(btnConcluir);
+            item.appendChild(btnRemover);
+            lista.appendChild(item);
+
+            campo.value = "";
+            campoData.value = "";
+
+            atualizarContador();
+        }
+    </script>
+
+</body>
+</html>
