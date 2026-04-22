@@ -1,12 +1,30 @@
 /*
-  Arquivo: index.css
-  Path: styles/index.css
-  Função: Estilos específicos da página inicial/loja
-  Responsabilidades:
-    - Layout da página de produtos
-    - Estilo da listagem de produtos
-    - Cards de produtos
-    - Filtros de preço
-    - Header e navegação
-    - Responsividade da página inicial
+  layout da pagina inicial / cards de produto
 */
+
+#filtro {
+  margin-bottom: 1rem;
+}
+
+#lista-produtos {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.card .preco {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}

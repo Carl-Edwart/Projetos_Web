@@ -1,11 +1,38 @@
 /*
-  Arquivo: main.css
-  Path: styles/main.css
-  Função: Estilos globais e gerais da aplicação
-  Responsabilidades:
-    - Reset CSS e configurações globais
-    - Variáveis CSS (cores, fontes, espaçamentos)
-    - Estilos base de elementos HTML
-    - Classes utilitárias reutilizáveis
-    - Media queries para responsividade geral
+  estilos globais da aplcação
+  reset basico e botoes
 */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 1rem;
+  background: #f5f5f5;
+}
+
+a {
+  color: #2563eb;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+}
+
+button:hover {
+  background: #eee;
+}
