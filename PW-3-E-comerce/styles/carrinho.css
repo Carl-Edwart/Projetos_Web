@@ -1,11 +1,23 @@
 /*
-  Arquivo: carrinho.css
-  Path: styles/carrinho.css
-  Função: Estilos específicos da página de carrinho
-  Responsabilidades:
-    - Layout da tabela/lista de carrinho
-    - Estilo dos itens no carrinho
-    - Seção de resumo e totais
-    - Botões de ação (remover, atualizar)
-    - Responsividade do carrinho
+  tabela do carrinho e total em baixo
 */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+#total {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+}
