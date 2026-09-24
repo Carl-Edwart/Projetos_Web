@@ -1,8 +1,3 @@
-# Banco local gerado automaticamente no modo demonstração (SQLite)
-database/demo.sqlite
-database/*.sqlite
-database/*.db
-
 # Credenciais e ambiente — nunca versionar segredos
 .env
 .env.*
@@ -10,18 +5,24 @@ database/*.db
 *.pem
 *.key
 
-# Dependências e build PHP/JS
+# Dependências e build
 vendor/
 node_modules/
 dist/
 build/
 
-# Caches e temporários
+# Caches, logs e temporários
 *.log
 *.tmp
 tmp/
 temp/
 .cache/
+__pycache__/
+*.pyc
+
+# Bancos locais gerados automaticamente (ex.: modo demonstração do CRUD)
+*.sqlite
+*.db
 
 # Sistema operacional e IDEs
 .DS_Store
