@@ -1,0 +1,202 @@
+/* =====================================================================
+ * CRUD Mundo · ajustes de responsividade, tamanho e estilo
+ * Carregado DEPOIS de style.css / mapa.css (por isso sobrescreve).
+ * ===================================================================== */
+
+/* ------------------------- Escala menor + base ------------------------- */
+html { font-size: 15px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { overflow-x: clip; }
+img, svg, video { max-width: 100%; }
+[hidden] { display: none !important; }
+::selection { background: rgba(14, 116, 144, .22); }
+
+/* barra de rolagem discreta */
+* { scrollbar-width: thin; scrollbar-color: #b6c4d4 transparent; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: #b6c4d4; border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #8fa3b8; background-clip: content-box; }
+
+.container { width: min(1180px, 100% - 1.5rem); }
+.pagina { padding-block: 1.25rem 2.4rem; }
+.tabela td, .tabela th, .detalhe, .alerta { overflow-wrap: anywhere; }
+
+/* ------------------------------ Topo (menu) ------------------------------ */
+.topo {
+    background: linear-gradient(120deg, #0c4a6e 0%, var(--mar) 55%, #0d9488 100%);
+    transition: box-shadow var(--transicao);
+}
+.topo-interno {
+    width: min(1180px, 100% - 1.5rem);
+    gap: .6rem; padding: .55rem 0;
+    transition: padding .25s ease;
+}
+.topo.topo-rolou { box-shadow: 0 10px 30px -12px rgba(12, 74, 110, .75); }
+.topo.topo-rolou .topo-interno { padding: .3rem 0; }
+
+.logo { font-size: 1.05rem; flex: none; transition: transform var(--transicao); }
+.logo:hover { transform: scale(1.04); }
+
+.topo nav { flex: 1 1 auto; min-width: 0; margin-left: 0; justify-content: center; gap: .1rem; }
+.topo nav a {
+    font-size: .84rem; padding: .38rem .62rem; white-space: nowrap; flex: none;
+    position: relative;
+}
+.topo nav a:not(.ativo):hover { transform: translateY(-1px); }
+.nav-icone { font-size: .9em; transition: transform .25s ease; }
+.topo nav a:hover .nav-icone { transform: scale(1.25) rotate(-6deg); }
+
+.busca-caixa { flex: none; }
+#busca-global { width: 140px; padding: .4rem .85rem; font-size: .84rem; }
+#busca-global:focus { width: 220px; }
+
+.conta-usuario { flex: none; gap: .4rem; font-size: .8rem; }
+.conta-nome { display: none; }
+.conta-avatar {
+    width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; flex: none;
+    background: rgba(255, 255, 255, .2); border: 1px solid rgba(255, 255, 255, .45);
+    color: #fff; font-weight: 800; font-size: .8rem; cursor: default;
+}
+.topo .btn.btn-sair { padding: .26rem .7rem; font-size: .78rem; line-height: 1.4; }
+
+/* 1181px–1499px: sem ícones nas abas (não cabem em uma linha) */
+@media (min-width: 1181px) and (max-width: 1499px) {
+    .topo nav a .nav-icone { display: none; }
+}
+
+/* ≤1180px: menu "hambúrguer" (o menu de 7 abas não cabe em uma linha) */
+@media (max-width: 1180px) {
+    .topo-interno { flex-wrap: wrap; }
+    .nav-btn { display: flex; margin-left: auto; }
+    .topo nav {
+        display: none; width: 100%; flex-direction: column; justify-content: flex-start;
+        padding: .3rem 0 .6rem; gap: .2rem;
+    }
+    .topo nav.aberta { display: flex; animation: menu-abrir .22s ease both; }
+    .topo nav a { width: 100%; font-size: .92rem; padding: .55rem .9rem; border-radius: 12px; }
+    .topo nav a .nav-icone { display: inline; }
+    .busca-caixa { width: 100%; order: 3; }
+    #busca-global, #busca-global:focus { width: 100%; }
+    .conta-usuario { margin-left: 0; }
+    .formulario { grid-template-columns: 1fr; }
+}
+@media (min-width: 1181px) { .nav-btn { display: none; } }
+@keyframes menu-abrir { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+/* barra de progresso da rolagem */
+#progresso-rolagem {
+    position: fixed; left: 0; top: 0; height: 3px; width: 100%; z-index: 80;
+    background: linear-gradient(90deg, #22d3ee, #34d399, #fbbf24);
+    transform-origin: 0 50%; transform: scaleX(0); pointer-events: none;
+}
+
+/* --------------------------- Cabeçalho da página --------------------------- */
+.pagina-topo { margin-bottom: .9rem; align-items: center; }
+.pagina-topo h1 {
+    font-size: clamp(1.2rem, 1rem + 1vw, 1.5rem); margin-bottom: .1rem;
+    color: var(--mar-esc);
+}
+.subtitulo { font-size: .88rem; }
+
+/* ------------------------------- Início (hero) ------------------------------- */
+.hero { padding: 1.5rem 1.4rem; margin-bottom: 1.1rem; }
+.hero h1 { font-size: clamp(1.3rem, 1.05rem + 1.2vw, 1.7rem); }
+.hero p { font-size: .95rem; margin-bottom: .9rem; }
+.hero::after { font-size: 6.5rem; right: -8px; bottom: -26px; animation: flutuar 7s ease-in-out infinite; }
+@keyframes flutuar { 50% { transform: rotate(-4deg) translateY(-8px); } }
+
+.grade { gap: .8rem; margin-bottom: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); }
+.grade-2 { gap: .8rem; margin-bottom: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
+.atalhos { gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)); }
+.estat { padding: .85rem 1rem; gap: .75rem; }
+.estat .icone { width: 40px; height: 40px; flex-basis: 40px; font-size: 1.15rem; border-radius: 11px; }
+.estat .numero { font-size: 1.35rem; }
+.estat .rotulo { font-size: .8rem; }
+.atalho { padding: 1rem 1.1rem; }
+.cartao-pad { padding: .95rem 1.1rem; }
+
+/* ----------------------------- Tabelas e botões ----------------------------- */
+.tabela { font-size: .88rem; }
+.tabela th, .tabela td { padding: .6rem .75rem; }
+.btn { font-size: .86rem; padding: .48rem .95rem; position: relative; overflow: hidden; }
+.btn-pequeno { padding: .28rem .65rem; font-size: .78rem; }
+.campo-busca { font-size: .88rem; padding: .48rem .9rem; }
+.formulario { padding: 1.15rem; gap: .9rem 1.05rem; }
+.rodape { padding: 1.2rem 1rem 1rem; font-size: .85rem; }
+
+/* ----------------------- Brilho que segue o mouse (JS) ----------------------- */
+.estat, .atalho, .pais-card, .resumo-card, .etec-card { position: relative; isolation: isolate; }
+.estat::before, .atalho::before, .pais-card::before, .resumo-card::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+    background: radial-gradient(180px circle at var(--mx, 50%) var(--my, 50%), rgba(14, 116, 144, .16), transparent 70%);
+    opacity: 0; transition: opacity .25s ease; pointer-events: none;
+}
+.estat:hover::before, .atalho:hover::before, .pais-card:hover::before, .resumo-card:hover::before { opacity: 1; }
+
+/* inclinação suave (3D) controlada pelo JS */
+.pais-card, .estat, .atalho {
+    transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform .18s ease-out, box-shadow var(--transicao), border-color var(--transicao);
+}
+.pais-card:hover, .estat:hover, .atalho:hover {
+    transform: perspective(700px) translateY(-3px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+
+/* --------------------------- Aparecer ao rolar (JS) --------------------------- */
+.js-efeitos .rv {
+    opacity: 0; transform: translateY(16px) scale(.985);
+    transition: opacity .55s ease, transform .55s cubic-bezier(.2, .7, .2, 1);
+    transition-delay: var(--rv-atraso, 0ms);
+}
+.js-efeitos .rv.rv-in { opacity: 1; transform: none; }
+
+/* --------------------------- Onda no clique (ripple) --------------------------- */
+.ripple {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    background: rgba(255, 255, 255, .55); transform: scale(0);
+    animation: ripple .6s ease-out forwards;
+}
+.btn-neutro .ripple, .chip-filtro .ripple, .api-aba .ripple { background: rgba(14, 116, 144, .22); }
+@keyframes ripple { to { transform: scale(1); opacity: 0; } }
+.chip-filtro, .api-aba { position: relative; overflow: hidden; }
+
+/* ----------------------------- Pulso ao atualizar ----------------------------- */
+.pulso { animation: pulso .5s ease; }
+@keyframes pulso { 40% { transform: scale(1.12); } }
+
+/* ----------------------------- Voltar ao topo ----------------------------- */
+#voltar-topo {
+    position: fixed; right: 1rem; bottom: 2.9rem; z-index: 70;
+    width: 42px; height: 42px; border-radius: 50%; border: 0; cursor: pointer;
+    background: linear-gradient(135deg, var(--mar), #0d9488); color: #fff; font-size: 1.15rem; line-height: 1;
+    box-shadow: 0 10px 24px -8px rgba(14, 116, 144, .8);
+    opacity: 0; transform: translateY(14px) scale(.8); pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+}
+#voltar-topo.visivel { opacity: 1; transform: none; pointer-events: auto; }
+#voltar-topo:hover { transform: translateY(-3px); }
+
+/* ------------------------ Transição entre páginas ------------------------ */
+.saindo .pagina { opacity: 0; transform: translateY(-6px); transition: opacity .15s ease, transform .15s ease; }
+
+/* ------------------------------ Telas pequenas ------------------------------ */
+@media (max-width: 700px) {
+    .container { width: min(1180px, 100% - 1rem); }
+    .hero { padding: 1.2rem 1rem; }
+    .hero::after { font-size: 4.5rem; }
+    .pagina-topo .btn { flex: 1; }
+    #voltar-topo { right: .7rem; }
+}
+@media (max-width: 520px) {
+    html { font-size: 14px; }
+    .grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+    .estat { padding: .65rem .7rem; gap: .55rem; }
+    .estat .icone { width: 34px; height: 34px; flex-basis: 34px; font-size: 1rem; }
+    .estat .numero { font-size: 1.2rem; }
+    .tabela.responsiva td { padding: .5rem .75rem; }
+}
+
+/* quem prefere menos movimento: desliga animações decorativas */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

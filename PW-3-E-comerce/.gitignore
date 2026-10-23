@@ -3,10 +3,10 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-# Arquivos de ambiente
+# Arquivos de ambiente e secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
 # IDE e Editores
 .vscode/
@@ -34,3 +34,7 @@ logs/
 tmp/
 temp/
 *.tmp
+
+# PostgreSQL local
+*.dump
+*.sql.gz

@@ -15,6 +15,8 @@ $abas = [
     'paises'      => ['Países',      'backend/paises/index.php',         '🚩'],
     'governantes' => ['Governantes', 'backend/governantes/index.php',    '🧑‍💼'],
     'cidades'     => ['Cidades',     'backend/cidades/index.php',        '🏙️'],
+    'mapa'        => ['Mapa',        'mapa.php',                         '📍'],
+    'api'         => ['API Países',  'explorador.php',                   '🌐'],
 ];
 ?>
 <!DOCTYPE html>
@@ -26,8 +28,11 @@ $abas = [
     <meta name="description" content="Sistema de gerenciamento de países, cidades, continentes e governantes.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
     <link rel="stylesheet" href="<?= e(url('frontend/css/style.css')) ?>">
+    <link rel="stylesheet" href="<?= e(url('frontend/css/mapa.css')) ?>">
+    <link rel="stylesheet" href="<?= e(url('frontend/css/ajustes.css')) ?>">
     <script>window.BASE_URL = <?= json_encode(BASE_URL) ?>;</script>
     <script defer src="<?= e(url('frontend/js/app.js')) ?>"></script>
+    <script defer src="<?= e(url('frontend/js/efeitos.js')) ?>"></script>
 </head>
 <body>
 <header class="topo">
@@ -48,13 +53,14 @@ $abas = [
             </nav>
 
             <div class="busca-caixa">
-                <input type="search" id="busca-global" placeholder="🔎 Buscar país ou cidade…"
+                <input type="search" id="busca-global" placeholder="🔎 Buscar…" title="Buscar país ou cidade"
                        autocomplete="off" aria-label="Busca dinâmica por nome">
                 <ul id="resultados-busca" hidden></ul>
             </div>
         <?php endif; ?>
 
         <div class="conta-usuario">
+            <span class="conta-avatar" title="<?= e($nomeSessao) ?>" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($nomeSessao, 0, 1))) ?></span>
             <span class="conta-nome" title="Usuário autenticado"><?= e($nomeSessao) ?></span>
             <?php if (!$somenteTrocaSenha): ?>
                 <a class="conta-link" href="<?= e(url('backend/auth/senha.php')) ?>">Senha</a>

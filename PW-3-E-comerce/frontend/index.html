@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#0b120d">
+    <meta name="description" content="Checkout simples e seguro para pedidos de ônibus e camisetas.">
+    <title>Loja — pedido rápido</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script type="module" src="/assets/js/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="/" aria-label="Página inicial da loja">
+          <span class="brand__mark" aria-hidden="true">L</span>
+          <span class="brand__text"><strong>Loja</strong><span>Pedido rápido</span></span>
+        </a>
+        <span class="secure-label"><span class="secure-label__dot" aria-hidden="true"></span>Compra segura</span>
+      </div>
+    </header>
+
+    <main id="main-content" class="container checkout-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Checkout seguro</p>
+        <h1 id="page-title">Faça seu pedido</h1>
+        <p class="intro__text">Escolha, personalize e confira. Sem criar conta.</p>
+      </section>
+
+      <nav class="stepper" aria-label="Etapas da compra">
+        <ol class="stepper__list">
+          <li class="stepper__item is-current" data-step-indicator="1"><span>1</span><small>Produtos</small></li>
+          <li class="stepper__item" data-step-indicator="2"><span>2</span><small>Configuração</small></li>
+          <li class="stepper__item" data-step-indicator="3"><span>3</span><small>Comprador</small></li>
+          <li class="stepper__item" data-step-indicator="4"><span>4</span><small>Revisar e pagar</small></li>
+        </ol>
+        <div class="progress stepper__progress" role="progressbar" aria-label="Progresso da compra" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25">
+          <div class="progress-bar" id="progress-bar" style="width: 25%"></div>
+        </div>
+      </nav>
+
+      <div id="global-alert" class="alert d-none" role="alert" aria-live="assertive"></div>
+      <p id="live-status" class="visually-hidden" aria-live="polite"></p>
+
+      <section class="checkout-panel" data-step-panel="1" aria-labelledby="products-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Etapa 1</p>
+            <h2 id="products-title">O que você quer pedir?</h2>
+          </div>
+          <span class="step-counter">1 de 4</span>
+        </div>
+        <div id="catalog-loading" class="loading-card" role="status">
+          <span class="spinner-border spinner-border-sm text-primary" aria-hidden="true"></span>
+          <span>Carregando opções…</span>
+        </div>
+        <div id="catalog-empty" class="empty-state d-none">
+          <div class="empty-state__icon" aria-hidden="true">◎</div>
+          <h3>Catálogo em configuração</h3>
+          <p>As opções de compra aparecerão aqui assim que estiverem disponíveis.</p>
+        </div>
+        <div id="product-list" class="row g-3" aria-live="polite"></div>
+        <div class="cart-preview mt-4">
+          <div class="cart-preview__heading">
+            <div>
+              <p class="eyebrow mb-1">Seu pedido</p>
+              <h3 class="h5 mb-0">Itens configurados <span class="item-count" id="item-count">0</span></h3>
+            </div>
+            <span class="cart-preview__total" id="cart-total">R$ 0,00</span>
+          </div>
+          <div id="cart-lines-step-one" class="cart-lines">
+            <p class="muted mb-0">Adicione um produto para começar.</p>
+          </div>
+        </div>
+        <div class="panel-actions panel-actions--end">
+          <button class="btn btn-primary btn-lg" id="products-continue" type="button" disabled>Continuar</button>
+        </div>
+      </section>
+
+      <section class="checkout-panel d-none" data-step-panel="2" aria-labelledby="configuration-title" hidden>
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Etapa 2</p>
+            <h2 id="configuration-title">Configure seus itens</h2>
+          </div>
+          <span class="step-counter">2 de 4</span>
+        </div>
+        <div class="config-card">
+          <div class="config-card__title">
+            <div>
+              <h3 class="h5 mb-1" id="selected-product-title">Produto</h3>
+              <p class="muted mb-0" id="selected-product-description">Escolha as opções do item.</p>
+            </div>
+            <button class="btn btn-link btn-sm" id="change-product" type="button">Trocar produto</button>
+          </div>
+          <form id="item-form" novalidate>
+            <div class="row g-3">
+              <div class="col-12 col-md-7" id="variant-field">
+                <label class="form-label" for="variant-select">Opção disponível</label>
+                <select class="form-select form-select-lg" id="variant-select" required></select>
+                <div class="invalid-feedback">Selecione uma opção disponível.</div>
+                <div class="form-text" id="variant-help"></div>
+              </div>
+              <div class="col-12 col-md-7 d-none" id="bus-price-field">
+                <span class="form-label">Valor</span>
+                <p class="bus-price" id="bus-price-value">R$ 0,00</p>
+                <div class="form-text">Valor único, sem opções para escolher.</div>
+              </div>
+              <div class="col-12 col-md-5">
+                <label class="form-label" for="item-quantity">Quantidade</label>
+                <input class="form-control form-control-lg" id="item-quantity" type="number" min="1" max="100" step="1" value="1" inputmode="numeric" required>
+                <div class="invalid-feedback">Informe uma quantidade disponível.</div>
+              </div>
+              <div class="col-12 d-none" id="shirt-name-field">
+                <label class="form-label" for="shirt-name">Nome na camiseta</label>
+                <input class="form-control form-control-lg" id="shirt-name" type="text" maxlength="40" autocomplete="off" aria-describedby="shirt-name-help">
+                <div class="form-text" id="shirt-name-help">Use o nome que deve aparecer na camiseta.</div>
+              </div>
+              <div class="col-12 col-sm-6 d-none" id="shirt-number-field">
+                <label class="form-label" for="shirt-number">Número na camiseta</label>
+                <input class="form-control form-control-lg" id="shirt-number" type="text" inputmode="numeric" pattern="[0-9]+" maxlength="12" autocomplete="off">
+              </div>
+            </div>
+            <div class="inline-error d-none" id="item-error" role="alert"></div>
+            <div class="panel-actions panel-actions--split">
+              <button class="btn btn-outline-secondary" id="configuration-back" type="button">Voltar</button>
+              <button class="btn btn-primary" id="item-add" type="submit">Adicionar ao pedido</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="cart-preview mt-4">
+          <div class="cart-preview__heading">
+            <div>
+              <p class="eyebrow mb-1">Resumo</p>
+              <h3 class="h5 mb-0">Itens configurados <span class="item-count" id="item-count-two">0</span></h3>
+            </div>
+            <span class="cart-preview__total" id="cart-total-two">R$ 0,00</span>
+          </div>
+          <div id="cart-lines-step-two" class="cart-lines">
+            <p class="muted mb-0">Nenhum item adicionado.</p>
+          </div>
+        </div>
+        <div class="panel-actions panel-actions--split">
+          <button class="btn btn-outline-secondary" id="add-another-product" type="button">Adicionar outro produto</button>
+          <button class="btn btn-primary btn-lg" id="configuration-continue" type="button" disabled>Continuar</button>
+        </div>
+      </section>
+
+      <section class="checkout-panel d-none" data-step-panel="3" aria-labelledby="buyer-title" hidden>
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Etapa 3</p>
+            <h2 id="buyer-title">Seus dados</h2>
+          </div>
+          <span class="step-counter">3 de 4</span>
+        </div>
+        <p class="muted section-intro">Usaremos essas informações para identificar e acompanhar seu pedido.</p>
+        <form id="buyer-form" novalidate>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="buyer-name">Nome completo</label>
+              <input class="form-control form-control-lg" id="buyer-name" name="fullName" type="text" autocomplete="name" maxlength="120" required>
+              <div class="invalid-feedback">Informe seu nome completo.</div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="buyer-cpf">CPF</label>
+              <input class="form-control form-control-lg" id="buyer-cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" required>
+              <div class="invalid-feedback">Informe um CPF válido.</div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="buyer-rg">RG</label>
+              <input class="form-control form-control-lg" id="buyer-rg" name="rg" type="text" autocomplete="off" maxlength="24" required>
+              <div class="invalid-feedback">Informe um RG válido.</div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="buyer-birth-date">Data de nascimento</label>
+              <input class="form-control form-control-lg" id="buyer-birth-date" name="birthDate" type="date" autocomplete="bday" required>
+              <div class="invalid-feedback">Informe uma data válida.</div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="buyer-phone">Telefone com DDD</label>
+              <input class="form-control form-control-lg" id="buyer-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="(00) 00000-0000" required>
+              <div class="invalid-feedback">Informe um telefone brasileiro válido.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="buyer-email">E-mail</label>
+              <input class="form-control form-control-lg" id="buyer-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+              <div class="invalid-feedback">Informe um e-mail válido.</div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="buyer-class">Turma</label>
+              <input class="form-control form-control-lg" id="buyer-class" name="className" type="text" list="class-options" maxlength="80" required>
+              <datalist id="class-options"></datalist>
+              <div class="invalid-feedback">Informe sua turma.</div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="form-label" for="buyer-modality">Modalidade</label>
+              <input class="form-control form-control-lg" id="buyer-modality" name="modality" type="text" list="modality-options" maxlength="80" required>
+              <datalist id="modality-options"></datalist>
+              <div class="invalid-feedback">Informe a modalidade.</div>
+            </div>
+          </div>
+          <p class="privacy-note mt-3"><span aria-hidden="true">●</span> Seus dados são usados para processar e identificar este pedido.</p>
+          <div class="panel-actions panel-actions--split">
+            <button class="btn btn-outline-secondary" id="buyer-back" type="button">Voltar</button>
+            <button class="btn btn-primary btn-lg" id="buyer-continue" type="submit">Revisar pedido</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="checkout-panel d-none" data-step-panel="4" aria-labelledby="review-title" hidden>
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Etapa 4</p>
+            <h2 id="review-title">Revise e pague</h2>
+          </div>
+          <span class="step-counter">4 de 4</span>
+        </div>
+        <div class="row g-4 align-items-start">
+          <div class="col-12 col-lg-5 order-2 order-lg-1">
+            <aside class="summary-card" aria-labelledby="summary-title">
+              <div class="summary-card__heading">
+                <h3 class="h5 mb-0" id="summary-title">Resumo do pedido</h3>
+                <button class="btn btn-link btn-sm" id="edit-order" type="button">Editar</button>
+              </div>
+              <div id="review-items" class="summary-items"></div>
+              <div class="summary-divider"></div>
+              <div class="summary-total"><span>Total</span><strong id="review-total">R$ 0,00</strong></div>
+              <div class="buyer-summary mt-4">
+                <p class="eyebrow mb-2">Comprador</p>
+                <p class="mb-1" id="review-buyer-name"></p>
+                <p class="muted mb-1" id="review-buyer-contact"></p>
+                <p class="muted mb-0" id="review-buyer-class"></p>
+              </div>
+            </aside>
+          </div>
+          <div class="col-12 col-lg-7 order-1 order-lg-2">
+            <div class="payment-card">
+              <div class="payment-card__heading">
+                <div>
+                  <p class="eyebrow mb-1">Pagamento protegido</p>
+                  <h3 class="h5 mb-0">Cartão de crédito</h3>
+                </div>
+                <span class="provider-mark" aria-label="Mercado Pago">Mercado Pago</span>
+              </div>
+              <div id="payment-unavailable" class="alert alert-warning d-none" role="status">
+                O pagamento ainda não está configurado. Seu pedido não será cobrado.
+              </div>
+              <div id="payment-loading" class="loading-card d-none" role="status">
+                <span class="spinner-border spinner-border-sm text-primary" aria-hidden="true"></span>
+                <span>Carregando pagamento seguro…</span>
+              </div>
+              <div id="card-payment-brick"></div>
+              <p class="payment-disclaimer mt-3">Os dados do cartão são processados pelo Mercado Pago e não são armazenados nesta loja.</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel-actions panel-actions--start">
+          <button class="btn btn-outline-secondary" id="review-back" type="button">Voltar aos dados</button>
+        </div>
+      </section>
+
+      <section class="checkout-panel d-none" data-step-panel="5" aria-labelledby="confirmation-title" hidden>
+        <div id="confirmation-content"></div>
+      </section>
+
+      <footer class="site-footer">
+        <p>Pagamento processado com segurança pelo Mercado Pago.</p>
+        <a href="/privacy.html">Privacidade</a>
+      </footer>
+    </main>
+  </body>
+</html>
