@@ -17,7 +17,7 @@
  */
 
 // ↓↓↓ COLE SUA CHAVE DO REST COUNTRIES AQUI (opcional) ↓↓↓
-const RESTCOUNTRIES_CHAVE_PADRAO = 'rc_live_demo';
+const RESTCOUNTRIES_CHAVE_PADRAO = 'rc_live_e33fdada5fa2462280bf2d3b9e9e8c82';
 
 define('RESTCOUNTRIES_CHAVE', trim((string) (getenv('RESTCOUNTRIES_API_KEY') ?: RESTCOUNTRIES_CHAVE_PADRAO)));
 define('RESTCOUNTRIES_BASE', rtrim((string) (getenv('RESTCOUNTRIES_BASE') ?: 'https://api.restcountries.com/countries/v5'), '/'));
